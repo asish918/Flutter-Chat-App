@@ -1,4 +1,5 @@
 import 'package:chat_app/colors.dart';
+import 'package:chat_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,14 +14,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Chat App',
       theme: ThemeData.dark().copyWith(
-        colorScheme:
-            const ColorScheme.dark().copyWith(background: backgroundColor),
+        scaffoldBackgroundColor: backgroundColor,
       ),
-      home: const Scaffold(
-        body: Center(
-          child: Text("Hemlo Bimch"),
-        ),
-      ),
+      home: const HomeScreen()
     );
   }
 }
