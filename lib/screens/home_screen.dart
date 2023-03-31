@@ -1,4 +1,5 @@
 import 'package:chat_app/colors.dart';
+import 'package:chat_app/components/contact_list.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -48,7 +49,7 @@ class HomeScreen extends StatelessWidget {
             Tab(text: 'CALLS',),
           ]),
         ),
-        body: Text("Hemlo"),
+        body: const ContactList(),
       ),
     );
   }
