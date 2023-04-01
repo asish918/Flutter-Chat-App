@@ -38,18 +38,32 @@ class HomeScreen extends StatelessWidget {
             )
           ],
           bottom: const TabBar(
-            indicatorColor: tabColor,
-            indicatorWeight: 4,
-            labelColor: tabColor,
-            unselectedLabelColor: Colors.grey,
-            labelStyle: TextStyle(fontWeight: FontWeight.bold),
-            tabs: [
-            Tab(text: 'CHATS',),
-            Tab(text: 'STATUS',),
-            Tab(text: 'CALLS',),
-          ]),
+              indicatorColor: tabColor,
+              indicatorWeight: 4,
+              labelColor: tabColor,
+              unselectedLabelColor: Colors.grey,
+              labelStyle: TextStyle(fontWeight: FontWeight.bold),
+              tabs: [
+                Tab(
+                  text: 'CHATS',
+                ),
+                Tab(
+                  text: 'STATUS',
+                ),
+                Tab(
+                  text: 'CALLS',
+                ),
+              ]),
         ),
         body: const ContactList(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: tabColor,
+          child: const Icon(
+            Icons.comment,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }
