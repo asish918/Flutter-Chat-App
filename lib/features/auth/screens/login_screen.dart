@@ -2,7 +2,6 @@ import 'package:chat_app/colors.dart';
 import 'package:chat_app/common/utils/utils.dart';
 import 'package:chat_app/common/widgets/custom_button.dart';
 import 'package:chat_app/features/auth/controller/auth_controller.dart';
-import 'package:chat_app/features/auth/repository/auth_repository.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

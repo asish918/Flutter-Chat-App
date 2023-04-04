@@ -15,4 +15,9 @@ class AuthController {
   void signInWithPhone(BuildContext context, String phoneNumber) {
     authRepository.signInWithPhone(phoneNumber, context);
   }
+
+  void verifyOTP(BuildContext context, String verificationId, String userOTP) {
+    authRepository.verifyOTP(
+        context: context, verificationId: verificationId, userOTP: userOTP);
+  }
 }
