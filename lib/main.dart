@@ -1,4 +1,5 @@
 import 'package:chat_app/colors.dart';
+import 'package:chat_app/features/auth/screens/user_information_screen.dart';
 import 'package:chat_app/features/landing/screens/landing_screen.dart';
 import 'package:chat_app/firebase_options.dart';
 import 'package:chat_app/router.dart';
@@ -25,11 +26,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Chat App',
-        theme: ThemeData.dark().copyWith(
-            scaffoldBackgroundColor: backgroundColor,
-            appBarTheme: const AppBarTheme(color: appBarColor)),
-        onGenerateRoute: (settings) => generateRoute(settings),
-        home: const LandingScreen());
+      title: 'Chat App',
+      theme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: backgroundColor,
+          appBarTheme: const AppBarTheme(color: appBarColor)),
+      onGenerateRoute: (settings) => generateRoute(settings),
+      // home: const LandingScreen(),
+      home: const UserInformationScreen(),
+    );
   }
 }
