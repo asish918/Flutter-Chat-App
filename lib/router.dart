@@ -2,6 +2,8 @@ import 'package:chat_app/common/widgets/error.dart';
 import 'package:chat_app/features/auth/screens/login_screen.dart';
 import 'package:chat_app/features/auth/screens/otp_screen.dart';
 import 'package:chat_app/features/auth/screens/user_information_screen.dart';
+import 'package:chat_app/features/select_contacts/screens/select_contacts_screen.dart';
+import 'package:chat_app/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -22,6 +24,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case UserInformationScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const UserInformationScreen(),
+      );
+
+    case SelectContactsScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const SelectContactsScreen(),
+      );
+
+    case ChatScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const ChatScreen(),
       );
 
     default:
