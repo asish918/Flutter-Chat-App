@@ -43,7 +43,11 @@ class SelectContactRepository {
 
         if (selectedPhoneNumber == userData.phoneNumber) {
           isFound = true;
-          Navigator.pushNamed(context, ChatScreen.routeName);
+          Navigator.pushNamed(
+            context,
+            ChatScreen.routeName,
+            arguments: {'name': userData.name, 'uid': userData.uid},
+          );
         }
       }
 

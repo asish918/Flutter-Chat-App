@@ -32,8 +32,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
 
     case ChatScreen.routeName:
+      final arguments = settings.arguments as Map<String, dynamic>;
+      final name = arguments['name'];
+      final uid = arguments['uid'];
       return MaterialPageRoute(
-        builder: (context) => const ChatScreen(),
+        builder: (context) => ChatScreen(name: name, uid: uid),
       );
 
     default:
