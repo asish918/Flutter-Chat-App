@@ -36,7 +36,6 @@ class MyApp extends ConsumerWidget {
         appBarTheme: const AppBarTheme(color: appBarColor),
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      // home: const LandingScreen(),
       home: ref.watch(userDataAuthProvider).when(
             data: (user) {
               if (user == null) {

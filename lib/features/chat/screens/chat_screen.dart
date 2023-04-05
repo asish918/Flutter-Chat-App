@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:chat_app/common/widgets/loader.dart';
 import 'package:chat_app/features/auth/controller/auth_controller.dart';
+import 'package:chat_app/features/chat/widgets/bottom_chat_field.dart';
 import 'package:chat_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 
@@ -57,55 +58,17 @@ class ChatScreen extends ConsumerWidget {
         ],
       ),
       body: Column(
-        children: [
-          const Expanded(
+        children: const[
+          Expanded(
             child: ChatList(),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                  filled: true,
-                  fillColor: mobileChatBoxColor,
-                  prefixIcon: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Icon(
-                      Icons.emoji_emotions,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      mainAxisSize: MainAxisSize.min,
-                      children: const [
-                        Icon(
-                          Icons.camera_alt,
-                          color: Colors.grey,
-                        ),
-                        Icon(
-                          Icons.attach_file,
-                          color: Colors.grey,
-                        ),
-                        Icon(
-                          Icons.money,
-                          color: Colors.grey,
-                        ),
-                      ],
-                    ),
-                  ),
-                  hintText: "Type a message...",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide:
-                        const BorderSide(width: 0, style: BorderStyle.none),
-                  ),
-                  contentPadding: const EdgeInsets.all(10)),
-            ),
+            padding: EdgeInsets.all(8.0),
+            child: BottomChatField(),
           ),
         ],
       ),
     );
   }
 }
+

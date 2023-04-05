@@ -3,7 +3,7 @@ import 'package:chat_app/features/auth/screens/login_screen.dart';
 import 'package:chat_app/features/auth/screens/otp_screen.dart';
 import 'package:chat_app/features/auth/screens/user_information_screen.dart';
 import 'package:chat_app/features/select_contacts/screens/select_contacts_screen.dart';
-import 'package:chat_app/screens/chat_screen.dart';
+import 'package:chat_app/features/chat/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {

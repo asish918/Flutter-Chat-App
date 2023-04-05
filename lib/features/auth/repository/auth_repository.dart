@@ -5,7 +5,7 @@ import 'package:chat_app/common/utils/utils.dart';
 import 'package:chat_app/features/auth/screens/otp_screen.dart';
 import 'package:chat_app/features/auth/screens/user_information_screen.dart';
 import 'package:chat_app/models/user_model.dart';
-import 'package:chat_app/screens/chat_screen.dart';
+import 'package:chat_app/features/chat/screens/chat_screen.dart';
 import 'package:chat_app/screens/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
