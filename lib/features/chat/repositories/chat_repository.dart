@@ -1,5 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:chat_app/common/enums/message_enum.dart';
+import 'package:chat_app/common/repositories/common_firebase_storage_repository.dart';
 import 'package:chat_app/common/utils/utils.dart';
 import 'package:chat_app/info.dart';
 import 'package:chat_app/models/chat_contact.dart';
@@ -165,6 +168,100 @@ class ChatRepository {
           text: text,
           timeSent: timeSent,
           messageType: MessageEnum.text,
+          messageId: messageId,
+          receiverUsername: receiverUserData.name,
+          username: senderUser.name);
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
+    }
+  }
+
+  void sendFileMessage(
+      {required BuildContext context,
+      required File file,
+      required String receiverUserId,
+      required UserModel senderUserData,
+      required ProviderRef ref,
+      required MessageEnum messageEnum}) async {
+    try {
+      var timeSent = DateTime.now();
+      var messageId = const Uuid().v1();
+
+      String imageUrl = await ref
+          .read(commonFirebaseStorageRepositoryProvider)
+          .storeFileToFirebase(
+              'chat/${messageEnum.type}/${senderUserData.uid}/$receiverUserId/$messageId',
+              file);
+
+      UserModel receiverUserData;
+      var userDataMap =
+          await firestore.collection('users').doc(receiverUserId).get();
+      receiverUserData = UserModel.fromMap(userDataMap.data()!);
+
+      String contactMsg;
+
+      switch (messageEnum) {
+        case MessageEnum.image:
+          contactMsg = '📸 Photo';
+          break;
+
+        case MessageEnum.video:
+          contactMsg = '🎥 Video';
+          break;
+
+        case MessageEnum.audio:
+          contactMsg = '🎶 Audio';
+          break;
+
+        case MessageEnum.gif:
+          contactMsg = '📹 GIF';
+          break;
+
+        default:
+          contactMsg = 'Invalid Data Type';
+      }
+
+      _saveDataToContactSubcollection(senderUserData, receiverUserData,
+          contactMsg, timeSent, receiverUserId);
+
+      _saveMessageToMessageSubcollection(
+          receiverUserId: receiverUserId,
+          text: imageUrl,
+          timeSent: timeSent,
+          messageId: messageId,
+          username: senderUserData.name,
+          receiverUsername: receiverUserData.name,
+          messageType: messageEnum);
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
+    }
+  }
+
+  void sendGIFMessage({
+    required BuildContext context,
+    required String gifUrl,
+    required String receiverUserId,
+    required UserModel senderUser,
+  }) async {
+    try {
+      var timeSent = DateTime.now();
+      UserModel receiverUserData;
+
+      var userDataMap =
+          await firestore.collection('user').doc(receiverUserId).get();
+
+      receiverUserData = UserModel.fromMap(userDataMap.data()!);
+
+      var messageId = const Uuid().v1();
+
+      _saveDataToContactSubcollection(
+          senderUser, receiverUserData, 'GIF', timeSent, receiverUserId);
+
+      _saveMessageToMessageSubcollection(
+          receiverUserId: receiverUserId,
+          text: gifUrl,
+          timeSent: timeSent,
+          messageType: MessageEnum.gif,
           messageId: messageId,
           receiverUsername: receiverUserData.name,
           username: senderUser.name);
