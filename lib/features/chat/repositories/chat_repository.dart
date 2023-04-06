@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:chat_app/common/enums/message_enum.dart';
 import 'package:chat_app/common/utils/utils.dart';
+import 'package:chat_app/info.dart';
 import 'package:chat_app/models/chat_contact.dart';
 import 'package:chat_app/models/message.dart';
 import 'package:chat_app/models/user_model.dart';
@@ -22,6 +23,51 @@ class ChatRepository {
     required this.firestore,
     required this.auth,
   });
+
+  Stream<List<ChatContact>> getChatContacts() {
+    return firestore
+        .collection('user')
+        .doc(auth.currentUser!.uid)
+        .collection('chats')
+        .snapshots()
+        .asyncMap((event) async {
+      List<ChatContact> contacts = [];
+
+      for (var document in event.docs) {
+        var chatContact = ChatContact.fromMap(document.data());
+        var userData =
+            await firestore.collection('user').doc(chatContact.contactId).get();
+        var user = UserModel.fromMap(userData.data()!);
+        contacts.add(ChatContact(
+            name: user.name,
+            profilePic: user.profilePic,
+            contactId: chatContact.contactId,
+            timeSent: chatContact.timeSent,
+            lastMessage: chatContact.lastMessage));
+      }
+
+      return contacts;
+    });
+  }
+
+  Stream<List<Message>> getChatStream(String receiverUserId) {
+    return firestore
+        .collection('user')
+        .doc(auth.currentUser!.uid)
+        .collection('chats')
+        .doc(receiverUserId)
+        .collection('messages')
+        .orderBy('timeSent')
+        .snapshots()
+        .map((event) {
+      List<Message> messages = [];
+      for (var document in event.docs) {
+        messages.add(Message.fromMap(document.data()));
+      }
+
+      return messages;
+    });
+  }
 
   void _saveDataToContactSubcollection(
       UserModel senderUserData,
@@ -55,7 +101,7 @@ class ChatRepository {
         .doc(auth.currentUser!.uid)
         .collection('chats')
         .doc(receiverUserId)
-        .set(receiverChatContact.toMap());
+        .set(senderChatContact.toMap());
   }
 
   void _saveMessageToMessageSubcollection(

@@ -1,12 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:chat_app/common/widgets/loader.dart';
 import 'package:chat_app/features/auth/controller/auth_controller.dart';
+import 'package:chat_app/features/chat/controller/chat_controller.dart';
 import 'package:chat_app/features/chat/widgets/bottom_chat_field.dart';
 import 'package:chat_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:chat_app/colors.dart';
-import 'package:chat_app/components/chat_list.dart';
+import 'package:chat_app/features/chat/widgets/chat_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChatScreen extends ConsumerWidget {
@@ -58,17 +59,16 @@ class ChatScreen extends ConsumerWidget {
         ],
       ),
       body: Column(
-        children: const[
+        children: [
           Expanded(
-            child: ChatList(),
+            child: ChatList(uid),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
-            child: BottomChatField(),
+            padding: const EdgeInsets.all(8.0),
+            child: BottomChatField(uid),
           ),
         ],
       ),
     );
   }
 }
-
