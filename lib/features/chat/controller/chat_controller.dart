@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:chat_app/common/enums/message_enum.dart';
+import 'package:chat_app/common/providers/message_reply_provider.dart';
 import 'package:chat_app/features/auth/controller/auth_controller.dart';
 import 'package:chat_app/models/chat_contact.dart';
 import 'package:chat_app/models/message.dart';
@@ -37,17 +38,21 @@ class ChatController {
     String text,
     String receiverUserId,
   ) {
+    final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendTextMessage(
               context: context,
               text: text,
               receiverUserId: receiverUserId,
-              senderUser: value!),
+              senderUser: value!,
+              messageReply: messageReply),
         );
+    ref.read(messageReplyProvider.state).update((state) => null);
   }
 
   void sendFileMessage(BuildContext context, File file, String receiverUserId,
       MessageEnum messageEnum) {
+    final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendFileMessage(
               context: context,
@@ -55,8 +60,10 @@ class ChatController {
               receiverUserId: receiverUserId,
               senderUserData: value!,
               messageEnum: messageEnum,
+              messageReply: messageReply,
               ref: ref),
         );
+    ref.read(messageReplyProvider.state).update((state) => null);
   }
 
   void sendGIFMessage(
@@ -65,12 +72,20 @@ class ChatController {
     String gifUrlPart = gifUrl.substring(gifUrlPartIndex);
     String newGifUrl = 'https://i.giphy.com/media/$gifUrlPart/200.gif';
 
+    final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendGIFMessage(
               context: context,
               gifUrl: newGifUrl,
               receiverUserId: receiverUserId,
+              messageReply: messageReply,
               senderUser: value!),
         );
+    ref.read(messageReplyProvider.state).update((state) => null);
+  }
+
+  void setChatMessageSeen(
+      BuildContext context, String receiverUserId, String messageId) {
+    chatRepository.setChatMessageSeen(context, receiverUserId, messageId);
   }
 }
