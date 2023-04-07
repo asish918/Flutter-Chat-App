@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/common/enums/message_enum.dart';
@@ -14,13 +15,37 @@ class DisplayMessageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isPlaying = false;
+    final AudioPlayer audioPlayer = AudioPlayer();
+
     return type == MessageEnum.text
         ? Text(
             message,
             style: const TextStyle(fontSize: 16),
           )
-        : type == MessageEnum.gif
-            ? CachedNetworkImage(imageUrl: message)
-            : CachedNetworkImage(imageUrl: message);
+        : type == MessageEnum.audio
+            ? StatefulBuilder(builder: (context, setState) {
+                return IconButton(
+                  constraints: const BoxConstraints(minHeight: 100),
+                  onPressed: () async {
+                    if (isPlaying) {
+                      await audioPlayer.pause();
+                      setState(() {
+                        isPlaying = false;
+                      });
+                    } else {
+                      await audioPlayer.play(UrlSource(message));
+                      setState(() {
+                        isPlaying = true;
+                      });
+                    }
+                  },
+                  icon:
+                      Icon(isPlaying ? Icons.pause_circle : Icons.play_circle),
+                );
+              })
+            : type == MessageEnum.gif
+                ? CachedNetworkImage(imageUrl: message)
+                : CachedNetworkImage(imageUrl: message);
   }
 }
